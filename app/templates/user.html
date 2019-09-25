@@ -1,20 +1,25 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <div></div>
-    <h1>User: {{ user.username }}</h1>
-    {% if user.about_me %}
-    <p>Status: {{ user.about_me }}</p>
-    {% endif %}
-    <table>
-        <tr>
-            <td>Company</td><td>: {{ user.work_for }}</td>
-        </tr>
-        <tr><td>Designation</td><td>: {{ user.designation }}</td>
-        </tr>
-    </table>
-    {% if user == current_user %}
-        <p><a href="{{ url_for('edit_employee_profile') }}">Edit your profile</a></p>
-    {% endif %}
+    <div class="col-md-4">
+        <h1>User: {{ user.username }}</h1>
+        {% if user.about_me %}
+        <p>Status: {{ user.about_me }}</p>
+        {% endif %}
+        <table>
+            <tr>
+                <td>Company</td><td>: {{ user.work_for }}</td>
+            </tr>
+            <tr>
+                <td>Designation</td><td>: {{ user.designation }}</td>
+            </tr>
+        </table>
+        {% if user == current_user %}
+            <p><a href="{{ url_for('edit_employee_profile') }}">Edit your profile</a></p>
+        {% endif %}
+    </div>
+    {% for review in reviews %}
+        {% include '_reviews.html' %}
+    {% endfor %}
     
 {% endblock %}

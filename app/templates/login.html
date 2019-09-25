@@ -1,28 +1,35 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <div class="col-md-4">
-        <h1>Sign In</h1>
-        <form action="" method="post" novalidate class="form-signin">
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.email.label }}<br>
-                {{ form.email(size=32) }}<br>
-                {% for error in form.email.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.password.label }}<br>
-                {{ form.password(size=32) }}<br>
-                {% for error in form.password.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-            <p>{{ form.submit() }}</p>
-        </form>
-        <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+    <div class="d-flex justify-content-sm-center">
+        <div class="search-bar mt-4">
+            
+            <form action="" method="post" novalidate class="form-signin p-5">
+                {{ form.hidden_tag() }}
+                <h1 class="text-white">Sign In</h1>
+                <p class="text-white">
+                    {{ form.email.label }}<br>
+                    {{ form.email(size=32) }}<br>
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p class="text-white"> 
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}<br>
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p class="text-white">{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p class="text-primary">{{ form.submit() }}</p>
+            </form>
+            {% if emp_login %}
+            <p class="col-md-4"><div class="text-white"> New User? <a href="{{ url_for('register') }}" class="text-white">Click to Register!</a></div></p>
+            {% else %}
+            <p >New User? <a href="{{ url_for('register_company') }}" >Click to Register!</a></p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
 

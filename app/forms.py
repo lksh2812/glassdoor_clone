@@ -4,7 +4,30 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo,\
     Length
 from app.models import Employee, Employer
+from flask import request
 
+
+class SearchForm(FlaskForm):
+    q = StringField('Search', validators=[DataRequired()])
+
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'csrf_enabled' not in kwargs:
+            kwargs['csrf_enabled'] = False
+        super(SearchForm, self).__init__(*args, **kwargs)
+
+
+class ReviewForm(FlaskForm):
+    review = TextAreaField('Write a Review', validators=[
+        DataRequired(), Length(min=1, max=140)])
+    submit = SubmitField('Submit')
+
+class EditEmployerProfileForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    domain = StringField('Company Domain', validators=[DataRequired()])
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    submit = SubmitField('Submit')
 
 class EditEmployeeProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

@@ -10,3 +10,11 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+.navbar-inner {
+    background-color:transparent;
+}
+
+.search-bar {
+  background-color: rgba(0,0,0,0.5);
+}

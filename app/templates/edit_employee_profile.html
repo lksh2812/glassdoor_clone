@@ -1,37 +1,49 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>Edit Profile</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
+    <div class="col-md-4">
+        <h1>Edit Profile</h1>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            {% if form.domain %}
+            <p>
+            {{ form.domain.label }}<br>
+            {{ form.domain(size=32) }}<br>
+            {% for error in form.domain.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
-        <p>
-            {{ form.work_for.label }}<br>
-            {{ form.work_for(size=32) }}<br>
-            {% for error in form.work_for.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.designation.label }}<br>
-            {{ form.designation(size=32) }}<br>
-            {% for error in form.designation.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+            </p>
+            {% else %}
+            <p>
+                {{ form.work_for.label }}<br>
+                {{ form.work_for(size=32) }}<br>
+                {% for error in form.work_for.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.designation.label }}<br>
+                {{ form.designation(size=32) }}<br>
+                {% for error in form.designation.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            {% endif %}
+            <p>
+                {{ form.about_me.label }}<br>
+                {{ form.about_me(cols=50, rows=4) }}<br>
+                {% for error in form.about_me.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
 {% endblock %}

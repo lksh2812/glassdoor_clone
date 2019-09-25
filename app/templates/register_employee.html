@@ -18,6 +18,15 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        {% if form.domain %}
+        <p>
+            {{ form.domain.label }}<br>
+            {{ form.domain(size=32) }}<br>
+            {% for error in form.domain.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% else %}
         <p>
             {{ form.work_for.label }}<br>
             {{ form.work_for(size=32) }}<br>
@@ -32,6 +41,7 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        {% endif %}
         <p>
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}<br>

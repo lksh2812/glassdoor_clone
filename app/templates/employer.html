@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <div class="col-md-4">
+        <h1>User: {{ user.username }}</h1>
+        {% if user.about_me %}
+        <p>Status: {{ user.about_me }}</p>
+        {% endif %}
+        <table>
+            <tr>
+                <td>Domain</td><td>: {{ user.domain }}</td>
+            </tr>
+        </table>
+        {% if user == current_user %}
+            <p>
+                <a href="{{ url_for('edit_employer_profile') }}">Edit your profile</a>
+            </p>
+        {% endif %}
+        {% if session['isemployee'] %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.review.label }}<br>
+                {{ form.review(cols=32, rows=4) }}<br>
+                {% for error in form.review.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+        {% endif %}
+        {% for review in reviews %}
+            {% include '_reviews.html' %}
+        {% endfor %}
+        {% if prev_url %}
+        <a href="{{ prev_url }}">Newer Reviews</a>
+        {% endif %}
+        {% if next_url %}
+        <a href="{{ next_url }}">Older Reviews</a>
+        {% endif %}
+
+    </div>
+    
+{% endblock %}
