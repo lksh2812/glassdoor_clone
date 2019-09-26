@@ -129,4 +129,3 @@ dmypy.json
 demo.py
 app.db
 .env
-.flaskenv
