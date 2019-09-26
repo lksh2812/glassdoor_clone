@@ -1,12 +1,12 @@
 <table class="table table-hover">
         <tr>
-            <td>
-                <a href="{{ url_for('user', id=review.author.id) }}">
+            <td class="search-bar">
+                <a href="{{ url_for('user', id=review.author.id) }}" class="text-white">
                     {{ review.author.username }}
                 </a>
-                said {{ moment(review.timestamp).fromNow() }}:
+                <span class="text-white">said {{ moment(review.timestamp).fromNow() }}:</span>
                 <br>
-                <span id="review{{ review.id }}">{{ review.body }}</span>
+                <span id="review{{ review.id }}" class="text-white">{{ review.body }}</span>
             </td>
         </tr>
     </table>

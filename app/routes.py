@@ -150,7 +150,7 @@ def edit_employee_profile():
 @login_required
 def user(id):
     user = Employee.query.filter_by(id=id).first_or_404()
-    return render_template('user.html', user=user)
+    return render_template('user.html', title='user', user=user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -182,7 +182,6 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # global isemployee
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()

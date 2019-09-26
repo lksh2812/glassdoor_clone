@@ -8,13 +8,16 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom css -->
-    <link rel="stylesheet" type="text/css" href="static/app.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}">
 
     <title>glassdoor</title>
+    
   </head>
-  <body style="background-image: url('static/index_bg.png')">
+  <body style="background-image: url({{ url_for('static', filename='index_bg.png') }})">
+        {{ moment.include_jquery()}}
+        {{ moment.include_moment()}}
         {% block navbar %}
-        <nav class="navbar navbar-expand-md .bg-light mb-4 navbar-inner">
+        <nav class="navbar navbar-expand-md .bg-light mb-4 search-bar">
             <a class="navbar-brand text-white" href="{{ url_for('index') }}"><b>glassdoor</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -57,17 +60,15 @@
         {% if messages %}
         <ul>
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <li class="text-white">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
         {% endwith %}
     {% block app_content %}
     {% endblock %}
-
-    <script src="/js/moment.min.js"></script>
+        
     
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

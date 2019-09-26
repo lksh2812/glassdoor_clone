@@ -18,3 +18,11 @@
 .search-bar {
   background-color: rgba(0,0,0,0.5);
 }
+
+.review-box{
+  max-width: 80%;
+}
+
+.form-box{
+  max-width: 5rem;
+}

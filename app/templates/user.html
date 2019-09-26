@@ -2,20 +2,20 @@
 
 {% block app_content %}
     <div class="col-md-4">
-        <h1>User: {{ user.username }}</h1>
+        <h1 class="text-white">User: {{ user.username }}</h1>
         {% if user.about_me %}
         <p>Status: {{ user.about_me }}</p>
         {% endif %}
         <table>
             <tr>
-                <td>Company</td><td>: {{ user.work_for }}</td>
+                <td class="text-white">Company</td><td class="text-white">: {{ user.work_for }}</td>
             </tr>
             <tr>
-                <td>Designation</td><td>: {{ user.designation }}</td>
+                <td class="text-white">Designation</td><td class="text-white">: {{ user.designation }}</td>
             </tr>
         </table>
         {% if user == current_user %}
-            <p><a href="{{ url_for('edit_employee_profile') }}">Edit your profile</a></p>
+            <p><a href="{{ url_for('edit_employee_profile') }}" class="text-white">Edit your profile</a></p>
         {% endif %}
     </div>
     {% for review in reviews %}

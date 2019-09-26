@@ -1,25 +1,26 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>Register</h1>
-    <form action="" method="post" class="col-md-4">
+    
+    <form action="" method="post" class="col-md-4 search-bar">
         {{ form.hidden_tag() }}
-        <p>
+        <h1 class="text-white col-md-4">Register</h1>
+        <p class="text-white">
             {{ form.username.label }}<br>
             {{ form.username(size=32) }}<br>
             {% for error in form.username.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-white">
             {{ form.email.label }}<br>
-            {{ form.email(size=64) }}<br>
+            {{ form.email(size=32) }}<br>
             {% for error in form.email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         {% if form.domain %}
-        <p>
+        <p class="text-white">
             {{ form.domain.label }}<br>
             {{ form.domain(size=32) }}<br>
             {% for error in form.domain.errors %}
@@ -27,14 +28,14 @@
             {% endfor %}
         </p>
         {% else %}
-        <p>
+        <p class="text-white">
             {{ form.work_for.label }}<br>
             {{ form.work_for(size=32) }}<br>
             {% for error in form.work_for.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-white">
             {{ form.designation.label }}<br>
             {{ form.designation(size=32) }}<br>
             {% for error in form.designation.errors %}
@@ -42,20 +43,20 @@
             {% endfor %}
         </p>
         {% endif %}
-        <p>
+        <p class="text-white">
             {{ form.password.label }}<br>
             {{ form.password(size=32) }}<br>
             {% for error in form.password.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>
+        <p class="text-white">
             {{ form.password2.label }}<br>
             {{ form.password2(size=32) }}<br>
             {% for error in form.password2.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.submit() }}</p>
+        <p class="text-white">{{ form.submit() }}</p>
     </form>
 {% endblock %}

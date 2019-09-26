@@ -1,42 +1,44 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <div class="col-md-4">
-        <h1>User: {{ user.username }}</h1>
+    <div class="col-md-4 review-box ">
+        <h1 class="text-white">User: {{ user.username }}</h1>
         {% if user.about_me %}
-        <p>Status: {{ user.about_me }}</p>
+        <p class="text-white">Status: {{ user.about_me }}</p>
         {% endif %}
         <table>
             <tr>
-                <td>Domain</td><td>: {{ user.domain }}</td>
+                <td class="text-white">Domain</td><td class="text-white">: {{ user.domain }}</td>
             </tr>
         </table>
         {% if user == current_user %}
             <p>
-                <a href="{{ url_for('edit_employer_profile') }}">Edit your profile</a>
+                <a href="{{ url_for('edit_employer_profile') }}" class="text-white">Edit your profile</a>
             </p>
         {% endif %}
         {% if session['isemployee'] %}
         <form action="" method="post">
             {{ form.hidden_tag() }}
-            <p>
+            <p class="text-white">
                 {{ form.review.label }}<br>
                 {{ form.review(cols=32, rows=4) }}<br>
                 {% for error in form.review.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
-            <p>{{ form.submit() }}</p>
+            <p class="text-white">{{ form.submit() }}</p>
         </form>
         {% endif %}
+        <div>
         {% for review in reviews %}
             {% include '_reviews.html' %}
         {% endfor %}
+        </div>
         {% if prev_url %}
-        <a href="{{ prev_url }}">Newer Reviews</a>
+        <a href="{{ prev_url }}" class="text-white">Newer Reviews</a>
         {% endif %}
         {% if next_url %}
-        <a href="{{ next_url }}">Older Reviews</a>
+        <a href="{{ next_url }}" class="text-white">Older Reviews</a>
         {% endif %}
 
     </div>
