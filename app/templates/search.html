@@ -7,13 +7,13 @@
         <tr>
             {% if item.domain %}
             <td>
-                <a href="{{ url_for('employer', id=item.id) }}">{{ item.username }}</a><br>
+                <a href="{{ url_for('employers', id=item.id) }}">{{ item.username }}</a><br>
                 <span>{{ item.domain }}</span><br>
                 <span>{% if item.about_me %} {{item.about_me }} {% endif %}</span>    
             </td>
             {% else %}
             <td>
-                <a href="{{ url_for('user', id=item.id) }}">{{ item.username }}</a><br>
+                <a href="{{ url_for('users', id=item.id) }}">{{ item.username }}</a><br>
                 <span>Work in: {{ item.work_for }}</span><br>
                 <span>As: {{ item.designation }}</span><br>
                 <span>{% if item.about_me %} {{item.about_me }} {% endif %}</span>

@@ -13,7 +13,6 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bootstrap = Bootstrap(app)
 loginmanager = LoginManager(app)
-# login = LoginManager(app)
 loginmanager.login_view = 'login'
 moment = Moment(app)
 app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \

@@ -1,7 +1,7 @@
 <table class="table table-hover">
         <tr>
             <td class="search-bar">
-                <a href="{{ url_for('user', id=review.author.id) }}" class="text-white">
+                <a href="{{ url_for('users', id=review.author.id) }}" class="text-white">
                     {{ review.author.username }}
                 </a>
                 <span class="text-white">said {{ moment(review.timestamp).fromNow() }}:</span>

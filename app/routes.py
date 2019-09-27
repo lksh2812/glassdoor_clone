@@ -25,16 +25,16 @@ def search():
                            next_url=next_url, prev_url=prev_url)
 
 
-@app.route('/employer_search')
-def employer_search():
+@app.route('/employerssearch')
+def employerssearch():
     if not g.search_form.validate():
         return redirect(url_for('index'))
     page = request.args.get('page', 1, type=int)
     employers, total = Employer.search(g.search_form.q.data, page,
                                current_app.config['POSTS_PER_PAGE'])
-    next_url = url_for('employer_search', q=g.search_form.q.data, page=page + 1) \
+    next_url = url_for('employerssearch', q=g.search_form.q.data, page=page + 1) \
         if total > page * current_app.config['POSTS_PER_PAGE'] else None
-    prev_url = url_for('employer_search', q=g.search_form.q.data, page=page - 1) \
+    prev_url = url_for('employerssearch', q=g.search_form.q.data, page=page - 1) \
         if page > 1 else None
     return render_template('search.html', title='Search', items=employers,
                            next_url=next_url, prev_url=prev_url)
@@ -53,9 +53,9 @@ def load_user(id):
         return Employer.query.get(int(id))
 
 
-@app.route('/edit_employer_profile', methods=['GET', 'POST'])
+@app.route('/employersprofile', methods=['GET', 'POST'])
 @login_required
-def edit_employer_profile():
+def employersprofile():
     form = EditEmployerProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -63,17 +63,17 @@ def edit_employer_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_employer_profile'))
+        return redirect(url_for('employers', id=current_user.id))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return render_template('edit_employee_profile.html', title='Edit Profile',
+    return render_template('profile.html', title='Edit Profile',
                            form=form)
 
 
-@app.route('/employer/<id>', methods=['GET', 'POST'])
+@app.route('/employers/<id>', methods=['GET', 'POST'])
 @login_required
-def employer(id):
+def employers(id):
     user = Employer.query.filter_by(id=id).first_or_404()
     form = ReviewForm()
     if form.validate_on_submit():
@@ -81,19 +81,19 @@ def employer(id):
         db.session.add(review)
         db.session.commit()
         flash('Your review is updated!')
-        return redirect(url_for('employer', id=user.id))
+        return redirect(url_for('employers', id=user.id))
     page = request.args.get('page', 1, type=int)
     reviews = user.reviews.order_by(Review.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('employer', id=user.id, page=reviews.next_num) \
+    next_url = url_for('employers', id=user.id, page=reviews.next_num) \
         if reviews.has_next else None
-    prev_url = url_for('employer', id=user.id, page=reviews.prev_num) \
+    prev_url = url_for('employers', id=user.id, page=reviews.prev_num) \
         if reviews.has_prev else None
     return render_template('employer.html', user=user, form=form,\
         reviews=reviews.items, next_url=next_url, prev_url=prev_url)
 
-@app.route('/register_company', methods=['GET', 'POST'])
-def register_company():
+@app.route('/registeremployers', methods=['GET', 'POST'])
+def registeremployers():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationEmployer()
@@ -103,13 +103,12 @@ def register_company():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login_company'))
-    return render_template('register_employee.html', title='Register', form=form)
+        return redirect(url_for('loginemployers'))
+    return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/login_company', methods=['GET', 'POST'])
-def login_company():
-    # global isemployee
+@app.route('/loginemployers', methods=['GET', 'POST'])
+def loginemployers():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
@@ -117,7 +116,7 @@ def login_company():
         user = Employer.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid email or password')
-            return redirect(url_for('login_company'))
+            return redirect(url_for('loginemployers'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
@@ -127,9 +126,9 @@ def login_company():
     return render_template('login.html', title='Sign In', form=form, emp_login=False)
 
 
-@app.route('/edit_employee_profile', methods=['GET', 'POST'])
+@app.route('/employeesprofile', methods=['GET', 'POST'])
 @login_required
-def edit_employee_profile():
+def employeesprofile():
     form = EditEmployeeProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
@@ -138,17 +137,17 @@ def edit_employee_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_employee_profile'))
+        return redirect(url_for('users', id=current_user.id))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    return render_template('edit_employee_profile.html', title='Edit Profile',
+    return render_template('profile.html', title='Edit Profile',
                            form=form)
 
 
-@app.route('/user/<id>', methods=['GET', 'POST'])
+@app.route('/users/<id>', methods=['GET', 'POST'])
 @login_required
-def user(id):
+def users(id):
     user = Employee.query.filter_by(id=id).first_or_404()
     return render_template('user.html', title='user', user=user)
 
@@ -165,7 +164,7 @@ def register():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-    return render_template('register_employee.html', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/logout')

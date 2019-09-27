@@ -13,7 +13,7 @@
     <title>glassdoor</title>
     
   </head>
-  <body style="background-image: url({{ url_for('static', filename='index_bg.png') }})">
+  <body style="background-image: url({{ url_for('static', filename='index_bg.png') }})" class="bg">
         {{ moment.include_jquery()}}
         {{ moment.include_moment()}}
         {% block navbar %}
@@ -32,7 +32,7 @@
                     <a class="nav-link text-white text-white" href="{{ url_for('login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url_for('login_company') }}">Employers</a>
+                    <a class="nav-link text-white" href="{{ url_for('loginemployers') }}">Employers</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
@@ -40,11 +40,11 @@
                 </li>
                 {% if session['isemployee'] %}
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ url_for('user', id=current_user.id) }}">Profile</a>
+                    <a class="nav-link text-white" href="{{ url_for('users', id=current_user.id) }}">Profile</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ url_for('employer', id=current_user.id) }}">Profile</a>
+                        <a class="nav-link text-white" href="{{ url_for('employers', id=current_user.id) }}">Profile</a>
                     </li>
                 {% endif %}
                 {% endif %}
@@ -65,9 +65,10 @@
         </ul>
         {% endif %}
         {% endwith %}
-    {% block app_content %}
-    {% endblock %}
-        
+        <div>
+        {% block app_content %}
+        {% endblock %}
+        </div>
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
