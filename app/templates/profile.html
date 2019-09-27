@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <div class="col-md-4">
-        <h1>Edit Profile</h1>
+    <div class="col-md-4 search-bar">
+        <h1 class="text-white">Edit Profile</h1>
         <form action="" method="post">
             {{ form.hidden_tag() }}
             <p class="text-white">
@@ -38,7 +38,7 @@
             {% endif %}
             <p class="text-white">
                 {{ form.about_me.label }}<br>
-                {{ form.about_me(cols=50, rows=4) }}<br>
+                {{ form.about_me(cols=32, rows=4) }}<br>
                 {% for error in form.about_me.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
