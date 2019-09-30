@@ -115,7 +115,7 @@ class Employer(UserMixin, db.Model):
             if review.rating in range(1,6):
                 total += review.rating
                 count += 1
-        result = total/count if count !=0 else 'Be the first one to review'
+        result = total/count if count !=0 else False
         return result
 
 

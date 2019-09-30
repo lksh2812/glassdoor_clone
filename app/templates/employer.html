@@ -4,7 +4,11 @@
 {% block app_content %}
     <div class="col-sm-10">
         <h1 class=""><span></span><img src="{{ user.avatar(128) }}"></span>User: {{ user.username }}</h1>
-        <div>Employees Rating: {{ rating }}</div>
+        <div>{% if rating %}Employees Rating: {{ rating }}
+            {% else %}
+            <a href="#">Be the first one to review this firm</a>
+            {% endif %}
+        </div>
         {% if user.about_me %}
         <p class="">Status: {{ user.about_me }}</p>
         {% endif %}

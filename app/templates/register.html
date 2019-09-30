@@ -2,9 +2,9 @@
 
 {% block app_content %}
     
-    <form action="" method="post" class="col-md-4 search-bar">
+    <form action="" method="post" class="d-inline-flex p-4 flex-column search-bar">
         {{ form.hidden_tag() }}
-        <h1 class="text-white col-md-4">Register</h1>
+        <h1 class="text-white">Register</h1>
         <p class="text-white">
             {{ form.username.label }}<br>
             {{ form.username(size=32) }}<br>

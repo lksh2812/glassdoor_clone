@@ -15,7 +15,11 @@
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
                 <span class="">{% if employer.about_me %}{{ employer.about_me }} {% endif %}</span>
-                <footer class="blockquote-footer">{{ employer.get_rating() }}<cite title="Source Title"></cite></footer>
+                <footer class="blockquote-footer">
+                    {% if employer.get_rating() %}Employees Rating {{ employer.get_rating() }}
+                    {% else %} Be the first one to review this firm
+                    {% endif %}
+                    <cite title="Source Title"></cite></footer>
                 </blockquote>
             </div>
         </div>
