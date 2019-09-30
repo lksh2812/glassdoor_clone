@@ -2,6 +2,7 @@ from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from hashlib import md5
 # from app.search import add_to_index, remove_from_index, query_index
 
 
@@ -71,6 +72,11 @@ class Employee(UserMixin, db.Model):
         reviews = Review.query.filter_by(employee_id=self.id)
         return reviews.order_by(Review.timestamp.desc())
 
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=robohash&s={}'.format(
+            digest, size)
+
 
 class Employer(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -95,6 +101,23 @@ class Employer(UserMixin, db.Model):
         reviews = Review.query.filter_by(employer_id=self.id)
         return reviews.order_by(Review.timestamp.desc())
 
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=robohash&s={}'.format(
+            digest, size)
+
+    def get_rating(self):
+        # reviews = Review.query.filter_by(employer_id=self.id)
+        reviews = self.reviews
+        total = 0
+        count = 0
+        for review in reviews:
+            if review.rating in range(1,6):
+                total += review.rating
+                count += 1
+        result = total/count if count !=0 else 'Be the first one to review'
+        return result
+
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -102,6 +125,7 @@ class Review(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'))
     employer_id = db.Column(db.Integer, db.ForeignKey('employer.id'))
+    rating = db.Column(db.Integer)
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)

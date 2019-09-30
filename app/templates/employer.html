@@ -1,32 +1,34 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <div class="col-md-4 review-box ">
-        <h1 class="text-white">User: {{ user.username }}</h1>
+    <div class="col-sm-10">
+        <h1 class=""><span></span><img src="{{ user.avatar(128) }}"></span>User: {{ user.username }}</h1>
+        <div>Employees Rating: {{ rating }}</div>
         {% if user.about_me %}
-        <p class="text-white">Status: {{ user.about_me }}</p>
+        <p class="">Status: {{ user.about_me }}</p>
         {% endif %}
         <table>
             <tr>
-                <td class="text-white">Domain</td><td class="text-white">: {{ user.domain }}</td>
+                <td class="">Domain</td><td class="">: {{ user.domain }}</td>
             </tr>
         </table>
         {% if user == current_user %}
             <p>
-                <a href="{{ url_for('employersprofile') }}" class="text-white">Edit your profile</a>
+                <a href="{{ url_for('employersprofile') }}" class="">Edit your profile</a>
             </p>
         {% endif %}
         {% if session['isemployee'] %}
         <form action="" method="post">
             {{ form.hidden_tag() }}
-            <p class="text-white">
-                {{ form.review.label }}<br>
-                {{ form.review(cols=32, rows=4) }}<br>
+            <p class="">
+                <div>{{ wtf.form_field(form.review, class="form-width") }}</div>
                 {% for error in form.review.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
-            <p class="text-white">{{ form.submit() }}</p>
+            <p class="">{{ form.rating.label }} {{ form.rating }}</p>
+            <p class="">{{ form.submit() }}</p>
         </form>
         {% endif %}
         <div>
@@ -35,10 +37,10 @@
         {% endfor %}
         </div>
         {% if prev_url %}
-        <a href="{{ prev_url }}" class="text-white">Newer Reviews</a>
+        <a href="{{ prev_url }}" class="">Newer Reviews</a>
         {% endif %}
         {% if next_url %}
-        <a href="{{ next_url }}" class="text-white">Older Reviews</a>
+        <a href="{{ next_url }}" class="">Older Reviews</a>
         {% endif %}
 
     </div>

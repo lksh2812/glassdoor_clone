@@ -8,4 +8,4 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 5
     # ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
-    # LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+    # LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT') 845437

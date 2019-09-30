@@ -11,6 +11,20 @@ from app import loginmanager
 from flask import current_app
 
 
+@app.route('/explore')
+def explore():
+    page = request.args.get('page', 1, type=int)
+    employers = Employer.query.order_by(Employer.id.desc()).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.explore', page=employers.next_num) \
+        if employers.has_next else None
+    prev_url = url_for('main.explore', page=posts.prev_num) \
+        if employers.has_prev else None
+    return render_template('explore.html', title='Explore',
+                           employers=employers.items, next_url=next_url,
+                           prev_url=prev_url)
+
+
 @app.route('/search')
 def search():
     keyword = request.args['key']
@@ -77,12 +91,14 @@ def employers(id):
     user = Employer.query.filter_by(id=id).first_or_404()
     form = ReviewForm()
     if form.validate_on_submit():
-        review = Review(body=form.review.data, author=current_user, subject=user)
+        review = Review(body=form.review.data, author=current_user, \
+            subject=user, rating=int(form.rating.data))
         db.session.add(review)
         db.session.commit()
         flash('Your review is updated!')
         return redirect(url_for('employers', id=user.id))
     page = request.args.get('page', 1, type=int)
+    rating = user.get_rating()
     reviews = user.reviews.order_by(Review.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('employers', id=user.id, page=reviews.next_num) \
@@ -90,7 +106,7 @@ def employers(id):
     prev_url = url_for('employers', id=user.id, page=reviews.prev_num) \
         if reviews.has_prev else None
     return render_template('employer.html', user=user, form=form,\
-        reviews=reviews.items, next_url=next_url, prev_url=prev_url)
+        reviews=reviews.items, next_url=next_url, prev_url=prev_url, rating=rating)
 
 @app.route('/registeremployers', methods=['GET', 'POST'])
 def registeremployers():

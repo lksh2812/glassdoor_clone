@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,\
-    TextAreaField
+    TextAreaField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo,\
     Length
 from app.models import Employee, Employer
@@ -21,6 +21,11 @@ class SearchForm(FlaskForm):
 class ReviewForm(FlaskForm):
     review = TextAreaField('Write a Review', validators=[
         DataRequired(), Length(min=1, max=140)])
+    rating = SelectField(
+        'Rate this firm',
+        choices=[('1', '1'), ('2', '2'),('3', '3'),('4', '4'),('5', '5')]
+    )
+
     submit = SubmitField('Submit')
 
 class EditEmployerProfileForm(FlaskForm):

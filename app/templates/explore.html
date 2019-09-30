@@ -1,0 +1,24 @@
+{% extends "base2.html" %}
+
+{% block app_content %}
+    {% for employer in employers %}
+    <br>
+    <div class="col-sm-10">
+        <div class="card">
+            <div class="card-header">
+                <a href="{{ url_for('employers', id=employer.id) }}" class="">
+                    <span><img src="{{ employer.avatar(36) }}"></span>
+                    {{ employer.username }}
+                </a><br>
+                <span class="">Domain: {{ employer.domain }}:</span>
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                <span class="">{% if employer.about_me %}{{ employer.about_me }} {% endif %}</span>
+                <footer class="blockquote-footer">{{ employer.get_rating() }}<cite title="Source Title"></cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

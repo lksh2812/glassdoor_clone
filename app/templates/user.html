@@ -1,21 +1,21 @@
-{% extends "base.html" %}
+{% extends "base2.html" %}
 
 {% block app_content %}
     <div class="col-md-4">
-        <h1 class="text-white">User: {{ user.username }}</h1>
+        <h3 class=""><span></span><img src="{{ user.avatar(128) }}"></span>User: {{ user.username }}</h3>
         {% if user.about_me %}
-        <p class="text-white">Status: {{ user.about_me }}</p>
+        <p class="">Status: {{ user.about_me }}</p>
         {% endif %}
         <table>
             <tr>
-                <td class="text-white">Company</td><td class="text-white">: {{ user.work_for }}</td>
+                <td class="">Company</td><td class="">: {{ user.work_for }}</td>
             </tr>
             <tr>
-                <td class="text-white">Designation</td><td class="text-white">: {{ user.designation }}</td>
+                <td class="">Designation</td><td class="">: {{ user.designation }}</td>
             </tr>
         </table>
         {% if user == current_user %}
-            <p><a href="{{ url_for('employeesprofile') }}" class="text-white">Edit your profile</a></p>
+            <p><a href="{{ url_for('employeesprofile') }}" class="">Edit your profile</a></p>
         {% endif %}
     </div>
     {% for review in reviews %}

@@ -12,6 +12,9 @@
     background-size: cover; */ */
   }
 
+.form-width{
+  width: 100%;
+}
 #nav-toggle-button{
     background-color:red;
 }
