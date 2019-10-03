@@ -19,4 +19,4 @@ moment = Moment(app)
 #     if app.config['ELASTICSEARCH_URL'] else None
 
 
-from app import routes, models
+from app import routes, models, errors
