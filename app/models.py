@@ -116,7 +116,7 @@ class Employer(UserMixin, db.Model):
                 total += review.rating
                 count += 1
         result = total/count if count !=0 else False
-        return result
+        return round(result,2)
 
 
 class Review(db.Model):

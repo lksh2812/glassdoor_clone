@@ -20,6 +20,10 @@
         {% if user == current_user %}
             <p>
                 <a href="{{ url_for('employersprofile') }}" class="">Edit your profile</a>
+                
+                <button onclick="generateFile({{user.id}})" id="generate-file" class="btn btn-lg btn-primary">Generate File</button>
+                <a href="#" target="_blank" id="download-button" class="btn btn-danger btn-lg" download style="display:none">Download</a>
+                
             </p>
         {% endif %}
         {% if session['isemployee'] %}

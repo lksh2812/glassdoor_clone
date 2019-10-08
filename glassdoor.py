@@ -1,4 +1,4 @@
-from app import app, db
+from app import app, db, celery
 from app.models import Employer, Employee, Review
 
 @app.shell_context_processor

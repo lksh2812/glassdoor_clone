@@ -1,4 +1,4 @@
-from app import app
+from app import app, celery
 from flask import render_template, flash, redirect, url_for, request, g,\
     session
 from app.forms import LoginForm, RegistrationEmployee, EditEmployeeProfileForm, \
@@ -9,6 +9,47 @@ from werkzeug.urls import url_parse
 from app import db
 from app import loginmanager
 from flask import current_app
+import csv
+from flask import send_file
+import os
+import time
+
+@app.route('/task_status')
+def check_status(task):
+    time.sleep(4)
+    print(task.state)
+    flash('Task done')
+    # return redirect(url_for('employers', id=id))
+
+
+@app.route('/get_file/<id>')
+def get_file(id):
+   task = celery.AsyncResult(id)
+   url = task.result
+   return {'url' : url}
+
+
+@celery.task(name='download.review')
+def download_review(id):
+    file = os.getcwd()
+    user = Employer.query.filter_by(id=id).first_or_404()
+    reviews = user.reviews.order_by(Review.timestamp.desc())
+    csv_data = []
+    for review in reviews:
+        csv_data.append([review.author, review.body])
+    csv.register_dialect('myDialect', delimiter = '|', lineterminator = '\r\n\r\n')
+    with open(os.path.join(file,'app/static/'+id+'reviews.csv'), 'w') as f:
+        writer = csv.writer(f, dialect='myDialect')
+        writer.writerows(csv_data)
+    f.close()
+    url = "/static/{}reviews.csv".format(user.id)
+    return url
+
+
+@app.route('/download/review/<id>')
+def downloadreview(id):
+    task = download_review.delay(id)
+    return {'id': str(task)}
 
 
 @app.route('/explore')
@@ -39,7 +80,7 @@ def search():
                            next_url=next_url, prev_url=prev_url)
 
 
-@app.route('/employerssearch')
+@app.route('/employers/search')
 def employerssearch():
     if not g.search_form.validate():
         return redirect(url_for('index'))
@@ -67,7 +108,7 @@ def load_user(id):
         return Employer.query.get(int(id))
 
 
-@app.route('/employersprofile', methods=['GET', 'POST'])
+@app.route('/employers/profile', methods=['GET', 'POST'])
 @login_required
 def employersprofile():
     form = EditEmployerProfileForm()
@@ -108,7 +149,7 @@ def employers(id):
     return render_template('employer.html', user=user, form=form,\
         reviews=reviews.items, next_url=next_url, prev_url=prev_url, rating=rating)
 
-@app.route('/registeremployers', methods=['GET', 'POST'])
+@app.route('/register/employers', methods=['GET', 'POST'])
 def registeremployers():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -123,7 +164,7 @@ def registeremployers():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/loginemployers', methods=['GET', 'POST'])
+@app.route('/login/employers', methods=['GET', 'POST'])
 def loginemployers():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -142,7 +183,7 @@ def loginemployers():
     return render_template('login.html', title='Sign In', form=form, emp_login=False)
 
 
-@app.route('/employeesprofile', methods=['GET', 'POST'])
+@app.route('/employees/profile', methods=['GET', 'POST'])
 @login_required
 def employeesprofile():
     form = EditEmployeeProfileForm()
