@@ -16,5 +16,7 @@ const getDownloadModal = (task_id) => {
        generateButton.parentNode.removeChild(generateButton)
        downloadButton.setAttribute('href', download_url)
        downloadButton.style.display = "inline"
+       downloadButton.click()
+
    })
 }

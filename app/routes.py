@@ -26,6 +26,7 @@ def check_status(task):
 def get_file(id):
    task = celery.AsyncResult(id)
    url = task.result
+   print(url)
    return {'url' : url}
 
 
